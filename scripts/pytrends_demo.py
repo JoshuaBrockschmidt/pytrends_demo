@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import sys
 from datetime import datetime
 from getpass import getpass
 from matplotlib import pyplot
@@ -13,9 +14,14 @@ password = getpass('Enter your password: ')
 trendGet = TrendReq(username, password, custom_useragent='Python pytrends demo')
 query = input('Enter keywords to search: ')
 payload = {'q' : query.replace(',', '')}
+print('Loading Google Trends data...')
 trend = trendGet.trend(payload)
+if trend is None:
+    print('Exitting...')
+    sys.exit(1)
 
 # Organize trend data
+print('Organizing data...')
 x = []
 y = []
 rows = trend['table']['rows']
@@ -26,6 +32,7 @@ for _, v in enumerate(rows):
     y.append(v['c'][1]['v'])
 
 # Graph trend data
+print('Setting up graph...')
 years = YearLocator()
 months = MonthLocator()
 yearsFmt = DateFormatter('%Y')
@@ -43,4 +50,5 @@ ylbl = cols[1]['label']
 pyplot.title('"{}" search frequency'.format(ylbl))
 pyplot.xlabel(xlbl)
 pyplot.ylabel(ylbl)
+print('Displaying graph...')
 pyplot.show()
