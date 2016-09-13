@@ -9,9 +9,7 @@ from pytrends.request import TrendReq
 from pprint import PrettyPrinter
 
 # Get trend data
-username = input('Enter your Gmail address: ')
-password = getpass('Enter your password: ')
-trendGet = TrendReq(username, password, custom_useragent='Python pytrends demo')
+trendGet = TrendReq(None, None)
 query = input('Enter keywords to search: ')
 payload = {'q' : query.replace(',', '')}
 print('Loading Google Trends data...')
